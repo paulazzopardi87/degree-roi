@@ -20,4 +20,4 @@ Salary data synthesised from ONS ASHE, Glassdoor UK, LinkedIn Salary and profess
 
 ## Live Site
 
-Deployed via GitHub Pages.
+https://degree-roi.vercel.app
