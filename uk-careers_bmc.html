@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UK Careers Intelligence | AI Resilience & Degree ROI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3a;
+    --accent: #e8c84a;
+    --accent2: #4ae8a0;
+    --accent3: #e84a6a;
+    --text: #e8e8f0;
+    --text-muted: #8888aa;
+    --text-dim: #555568;
+    --font-display: 'Playfair Display', serif;
+    --font-mono: 'DM Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { overflow-x: hidden; max-width: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .logo-main {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .hstat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+  }
+
+  .hstat-val {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .hstat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 2.5rem 1.25rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: min(600px, 100vw); height: 300px;
+    background: radial-gradient(ellipse, rgba(232,200,74,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  /* ── TOOLBAR (always visible, single row) ── */
+  .toolbar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    position: sticky;
+    top: 56px;
+    z-index: 90;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.55rem 0.75rem 0.55rem 2rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text-dim); }
+
+  .search-icon {
+    position: absolute;
+    left: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  /* Sort select */
+  .sort-select-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.55rem 1.8rem 0.55rem 0.7rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-color: var(--surface2);
+    transition: border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  select:focus { border-color: var(--accent); }
+
+  /* Filter toggle button */
+  .filter-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .filter-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-toggle-btn.has-active { border-color: var(--accent); color: var(--accent); background: rgba(232,200,74,0.06); }
+
+  .filter-badge {
+    background: var(--accent);
+    color: #000;
+    border-radius: 99px;
+    font-size: 0.58rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  .filter-badge.show { display: flex; }
+
+  /* Results + view toggle */
+  .results-count {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .view-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    width: 30px; height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .view-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,200,74,0.08);
+  }
+
+  /* ── FILTER DRAWER ── */
+  .filter-drawer {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+    position: sticky;
+    top: calc(56px + 45px);
+    z-index: 89;
+  }
+
+  .filter-drawer.open {
+    max-height: 200px;
+  }
+
+  .filter-drawer-inner {
+    padding: 0.75rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .drawer-select-wrap {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: 99px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  .filter-chip.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,200,74,0.08);
+  }
+
+  .drawer-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .filter-btn { display: none; } /* legacy — hidden */
+
+  /* TABLE VIEW */
+  .main { padding: 1rem; max-width: 1400px; margin: 0 auto; }
+
+  @media (min-width: 600px) {
+    .main { padding: 1.5rem 2rem; }
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  thead {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    padding: 0.85rem 0.9rem;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    transition: color 0.15s;
+  }
+
+  th:hover { color: var(--accent); }
+  th.sorted { color: var(--accent); }
+
+  th .sort-arrow { margin-left: 0.3rem; opacity: 0.5; }
+  th.sorted .sort-arrow { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    transition: background 0.1s;
+    cursor: pointer;
+  }
+
+  tbody tr:hover { background: var(--surface2); }
+  tbody tr:last-child { border-bottom: none; }
+
+  td {
+    padding: 0.75rem 0.9rem;
+    vertical-align: middle;
+  }
+
+  .job-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.85rem;
+  }
+
+  .job-sector {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-top: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .rank-num {
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+
+  /* SCORE BARS */
+  .score-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .score-bar-wrap {
+    width: 60px;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .score-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    min-width: 24px;
+  }
+
+  /* COLOR CODING */
+  .c-high { color: var(--accent2); }
+  .c-mid  { color: var(--accent); }
+  .c-low  { color: var(--accent3); }
+
+  .bg-high { background: var(--accent2); }
+  .bg-mid  { background: var(--accent); }
+  .bg-low  { background: var(--accent3); }
+
+  /* SALARY */
+  .salary {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .salary-range {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-top: 0.1rem;
+  }
+
+  /* DEGREE BADGE */
+  .degree-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .deg-required { background: rgba(232,74,106,0.15); color: #f07090; border: 1px solid rgba(232,74,106,0.25); }
+  .deg-preferred { background: rgba(232,200,74,0.12); color: #e8c84a; border: 1px solid rgba(232,200,74,0.25); }
+  .deg-helpful { background: rgba(74,232,160,0.1); color: #4ae8a0; border: 1px solid rgba(74,232,160,0.2); }
+  .deg-none { background: rgba(120,120,160,0.1); color: #8888aa; border: 1px solid rgba(120,120,160,0.2); }
+
+  /* ROI */
+  .roi-cell {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .roi-positive { color: var(--accent2); }
+  .roi-marginal { color: var(--accent); }
+  .roi-negative { color: var(--accent3); }
+
+  .roi-years {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-top: 0.1rem;
+  }
+
+  /* ENTRY CHANCE */
+  .entry-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  .dot-filled { background: var(--accent2); }
+  .dot-mid { background: var(--accent); }
+  .dot-low { background: var(--accent3); }
+  .dot-empty { background: rgba(255,255,255,0.08); }
+
+  /* CARD VIEW */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-card, var(--accent)), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover { border-color: rgba(232,200,74,0.3); transform: translateY(-1px); }
+  .card:hover::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.9rem;
+  }
+
+  .card-rank {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.25rem 0 0.15rem;
+    line-height: 1.2;
+  }
+
+  .card-sector {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .card-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+
+  .metric-value {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .card-footer {
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    transform: translateY(12px);
+    transition: transform 0.2s;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .modal-sector {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 30px; height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .modal-close:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .modal-body { padding: 1.5rem; }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-metric-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .mmcard-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .mmcard-value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .mmcard-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  .modal-section {
+    margin-bottom: 1.2rem;
+  }
+
+  .modal-section-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-section p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ROI BREAKDOWN */
+  .roi-breakdown {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .roi-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    font-size: 0.82rem;
+  }
+
+  .roi-row + .roi-row { border-top: 1px solid rgba(42,42,58,0.5); }
+
+  .roi-label { color: var(--text-muted); font-size: 0.8rem; }
+  .roi-val { font-family: var(--font-mono); font-size: 0.8rem; }
+
+  .roi-total {
+    border-top: 1px solid var(--border) !important;
+    margin-top: 0.2rem;
+    padding-top: 0.6rem !important;
+    font-weight: 600;
+  }
+
+  /* GAUGE */
+  .gauge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .gauge-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    min-width: 120px;
+  }
+
+  .gauge-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .gauge-val {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* PATHS */
+  .path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .path-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.7rem;
+  }
+
+  .path-card-title {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .path-card-content {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* EMPTY */
+  .empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 768px) {
+    .header-stats { display: none; }
+    .toolbar { top: 56px; }
+    .filter-drawer { top: calc(56px + 45px); }
+    .modal-grid { grid-template-columns: 1fr; }
+    .path-grid { grid-template-columns: 1fr; }
+    th.hide-mobile, td.hide-mobile { display: none; }
+    .sort-select-wrap select { max-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-main">UK Careers Intelligence</div>
+    <div class="logo-sub">AI Resilience · Degree ROI · Entry Pathways</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-val" id="avg-ai">—</div>
+      <div class="hstat-label">Avg AI Resilience</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" id="avg-roi">—</div>
+      <div class="hstat-label">Avg Deg. Payback</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val">100</div>
+      <div class="hstat-label">Careers Tracked</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">United Kingdom · 2025 Data</div>
+  <h1>Is that degree<br><em>actually worth it?</em></h1>
+  <p>We mapped 100 UK careers against AI displacement risk, realistic entry pathways, and the cold maths of graduate debt vs lifetime earnings. Some results will surprise you.</p>
+  <div style="margin-top:1.5rem;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="paulazzopai" data-color="#FFDD00" data-emoji="☕" data-font="Inter" data-text="Helpful? Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+  </div>
+</div>
+
+<!-- TOOLBAR: single sticky row -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search" placeholder="Search careers or sectors…">
+  </div>
+  <div class="sort-select-wrap">
+    <select id="sort-by">
+      <option value="rank">Rank</option>
+      <option value="ai_resilience">AI Resilience ↓</option>
+      <option value="roi">Degree ROI ↓</option>
+      <option value="salary_mid">Salary ↓</option>
+      <option value="entry_no_degree">No-Degree Entry ↓</option>
+    </select>
+  </div>
+  <button class="filter-toggle-btn" id="filter-toggle-btn">
+    <span>Filters</span>
+    <span class="filter-badge" id="filter-badge">0</span>
+    <span id="filter-chevron">▾</span>
+  </button>
+  <span class="results-count" id="results-count">100</span>
+  <div class="view-toggle">
+    <button class="view-btn" id="btn-table" title="Table">☰</button>
+    <button class="view-btn active" id="btn-cards" title="Cards">⊞</button>
+  </div>
+</div>
+
+<!-- FILTER DRAWER: collapsible -->
+<div class="filter-drawer" id="filter-drawer">
+  <div class="filter-drawer-inner">
+    <div class="drawer-select-wrap">
+      <select id="sector-filter">
+        <option value="">All Sectors</option>
+      </select>
+      <select id="degree-filter">
+        <option value="">All Degrees</option>
+        <option value="required">Required</option>
+        <option value="preferred">Preferred</option>
+        <option value="helpful">Helpful</option>
+        <option value="none">Not Needed</option>
+      </select>
+    </div>
+    <div class="drawer-divider"></div>
+    <button class="filter-chip" id="btn-high-ai">🟢 High AI Resilience</button>
+    <button class="filter-chip" id="btn-no-degree">🎓 No Degree</button>
+    <button class="filter-chip" id="btn-good-roi">💰 Good ROI</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>High (≥70)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Medium (40–69)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>Low (&lt;40)</div>
+    <div style="margin-left:auto; font-family:var(--font-mono); font-size:0.62rem; color:var(--text-dim)">Click any row for full breakdown</div>
+  </div>
+
+  <!-- TABLE VIEW -->
+  <div id="table-view">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-col="rank">#<span class="sort-arrow">↕</span></th>
+            <th data-col="title">Career</th>
+            <th data-col="ai_resilience">AI Resilience<span class="sort-arrow">↕</span></th>
+            <th data-col="salary_mid" class="hide-mobile">Median Salary<span class="sort-arrow">↕</span></th>
+            <th data-col="degree_req" class="hide-mobile">Degree</th>
+            <th data-col="roi">Degree ROI<span class="sort-arrow">↕</span></th>
+            <th data-col="entry_no_degree">Entry w/o Degree<span class="sort-arrow">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD VIEW -->
+  <div id="card-view" class="hidden">
+    <div class="cards-grid" id="cards-body"></div>
+  </div>
+
+  <div class="empty-state hidden" id="empty-state">No careers match your filters.</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="m-title"></div>
+        <div class="modal-sector" id="m-sector"></div>
+      </div>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA: 100 UK CAREERS
+// Fields: rank, title, sector, salary_entry, salary_mid, salary_senior,
+//   ai_resilience (0-100), degree_req (required/preferred/helpful/none),
+//   degree_subject, degree_cost (£), entry_no_degree (0-100),
+//   payback_years (how long to recoup degree cost vs non-grad path),
+//   roi_score (0-100), ai_notes, entry_notes, career_notes
+// ============================================================
+const CAREERS = [
+  // HEALTHCARE
+  { rank:1, title:"Surgeon",sector:"Healthcare",salary_entry:55000,salary_mid:90000,salary_senior:140000,ai_resilience:90,degree_req:"required",degree_subject:"Medicine (MBBS/MBChB)",degree_cost:70000,entry_no_degree:2,payback_years:5,roi_score:88,ai_notes:"Physical dexterity, split-second decisions, patient communication and ethical judgment are deeply resistant to AI automation.",entry_notes:"No practical route without medical degree. Foundation/specialist training is mandatory.",career_notes:"One of the most secure long-term careers. Demand structurally guaranteed by demographics." },
+  { rank:2, title:"Psychiatrist",sector:"Healthcare",salary_entry:50000,salary_mid:88000,salary_senior:130000,ai_resilience:88,degree_req:"required",degree_subject:"Medicine + Psychiatry specialism",degree_cost:70000,entry_no_degree:2,payback_years:5,roi_score:87,ai_notes:"Nuanced human judgment, therapeutic alliance, and ethical complexity make this highly AI-resistant.",entry_notes:"Medical degree and Royal College of Psychiatrists training required.",career_notes:"Growing demand as mental health awareness rises. Under-resourced in NHS, strong private sector too." },
+  { rank:3, title:"GP (General Practitioner)",sector:"Healthcare",salary_entry:45000,salary_mid:82000,salary_senior:110000,ai_resilience:80,degree_req:"required",degree_subject:"Medicine (MBBS/MBChB)",degree_cost:70000,entry_no_degree:2,payback_years:6,roi_score:85,ai_notes:"AI assists diagnosis but the holistic patient relationship, trust, and clinical responsibility remain human.",entry_notes:"Medical degree and GP training scheme required.",career_notes:"Chronic NHS shortage. Salaried GPs well-compensated; partners can earn significantly more." },
+  { rank:4, title:"Nurse (Band 6–7)",sector:"Healthcare",salary_entry:28000,salary_mid:38000,salary_senior:52000,ai_resilience:85,degree_req:"required",degree_subject:"Nursing (BSc)",degree_cost:27000,entry_no_degree:5,payback_years:4,roi_score:72,ai_notes:"Physical care, empathy, and complex patient advocacy are inherently human. AI augments but won't replace.",entry_notes:"Nursing degree + NMC registration required. Nursing associates offer a non-degree entry route.",career_notes:"Bursary partially restored. Chronic shortage means strong job security and progression." },
+  { rank:5, title:"Physiotherapist",sector:"Healthcare",salary_entry:27000,salary_mid:37000,salary_senior:50000,ai_resilience:82,degree_req:"required",degree_subject:"Physiotherapy (BSc/MSc)",degree_cost:27000,entry_no_degree:5,payback_years:4,roi_score:70,ai_notes:"Hands-on treatment, movement assessment and patient rapport are difficult to replicate with AI.",entry_notes:"Degree and HCPC registration required.",career_notes:"Strong private sector opportunities alongside NHS. Sports physio commands premium." },
+  { rank:6, title:"Paramedic",sector:"Healthcare",salary_entry:25000,salary_mid:35000,salary_senior:45000,ai_resilience:83,degree_req:"preferred",degree_subject:"Paramedic Science (BSc)",degree_cost:27000,entry_no_degree:30,payback_years:6,roi_score:58,ai_notes:"Emergency decision-making in chaotic environments is highly resistant to automation.",entry_notes:"NHS apprenticeship routes available. Degree increasingly standard but not only path.",career_notes:"Physically demanding. Strong job security and genuine public service impact." },
+  { rank:7, title:"Dentist",sector:"Healthcare",salary_entry:42000,salary_mid:65000,salary_senior:95000,ai_resilience:82,degree_req:"required",degree_subject:"Dentistry (BDS)",degree_cost:72000,entry_no_degree:2,payback_years:6,roi_score:84,ai_notes:"Fine motor skills, patient management and procedural precision remain human-led.",entry_notes:"Dental degree and GDC registration are mandatory.",career_notes:"NHS/private mix offers flexibility. High earnings ceiling in private practice." },
+  { rank:8, title:"Pharmacist",sector:"Healthcare",salary_entry:30000,salary_mid:48000,salary_senior:65000,ai_resilience:62,degree_req:"required",degree_subject:"Pharmacy (MPharm)",degree_cost:40000,entry_no_degree:5,payback_years:5,roi_score:74,ai_notes:"Dispensing is being automated but clinical pharmacy, patient counselling and medicines optimisation remain high-value.",entry_notes:"MPharm + pre-registration training required.",career_notes:"Expanding clinical role with independent prescribing rights increasingly common." },
+  { rank:9, title:"Radiographer",sector:"Healthcare",salary_entry:26000,salary_mid:36000,salary_senior:48000,ai_resilience:55,degree_req:"required",degree_subject:"Radiography (BSc)",degree_cost:27000,entry_no_degree:5,payback_years:5,roi_score:63,ai_notes:"AI is strong in image reading but patient care, scanner operation, and clinical triage remain human.",entry_notes:"BSc + HCPC registration required.",career_notes:"AI will reshape but not eliminate. Strong public-sector employer." },
+  { rank:10, title:"Occupational Therapist",sector:"Healthcare",salary_entry:26000,salary_mid:36000,salary_senior:50000,ai_resilience:84,degree_req:"required",degree_subject:"Occupational Therapy (BSc)",degree_cost:27000,entry_no_degree:5,payback_years:4,roi_score:68,ai_notes:"Holistic functional assessment, adaptation and human-centred rehabilitation strongly resist automation.",entry_notes:"Degree and HCPC registration required.",career_notes:"Underrecognised but vital. Growing demand with ageing population." },
+
+  // LEGAL
+  { rank:11, title:"Barrister",sector:"Legal",salary_entry:25000,salary_mid:75000,salary_senior:250000,ai_resilience:72,degree_req:"required",degree_subject:"Law (LLB) + BPTC",degree_cost:55000,entry_no_degree:2,payback_years:8,roi_score:76,ai_notes:"Courtroom advocacy, strategy, and client trust are hard to automate. Research/drafting faces AI pressure.",entry_notes:"Law degree + Bar training essential. Highly competitive pupillage market.",career_notes:"Highly bimodal earnings. Junior Bar tough; senior Bar exceptional. AI may concentrate work at top." },
+  { rank:12, title:"Solicitor",sector:"Legal",salary_entry:28000,salary_mid:65000,salary_senior:150000,ai_resilience:66,degree_req:"required",degree_subject:"Law (LLB) + SQE",degree_cost:55000,entry_no_degree:5,payback_years:6,roi_score:72,ai_notes:"Contract drafting and research face AI pressure. Client advisory, negotiation and complex transactions remain human.",entry_notes:"Law degree and SQE route, or CILEX route for non-grads (longer path).",career_notes:"Huge range from high-street legal aid to Magic Circle. Earnings vary enormously." },
+  { rank:13, title:"Legal Executive (CILEX)",sector:"Legal",salary_entry:22000,salary_mid:42000,salary_senior:75000,ai_resilience:65,degree_req:"none",degree_subject:"CILEX qualification",degree_cost:8000,entry_no_degree:70,payback_years:1,roi_score:82,ai_notes:"Similar risks to solicitors but lower cost of entry makes ROI maths very attractive.",entry_notes:"No degree required. CILEX route is viable and growing.",career_notes:"Often overlooked route into legal profession. Specialist expertise can command premium fees." },
+  { rank:14, title:"Patent Attorney",sector:"Legal",salary_entry:35000,salary_mid:70000,salary_senior:140000,ai_resilience:74,degree_req:"required",degree_subject:"STEM degree + IP qualifications",degree_cost:40000,entry_no_degree:5,payback_years:4,roi_score:84,ai_notes:"Technical + legal blend is complex for AI. AI assists searching but human analysis critical.",entry_notes:"STEM degree required. IP Reg/EQE exams needed, not a law degree per se.",career_notes:"High earnings, specialised niche. Strong demand with innovation economy." },
+  { rank:15, title:"Compliance Officer",sector:"Legal/Finance",salary_entry:28000,salary_mid:55000,salary_senior:100000,ai_resilience:58,degree_req:"preferred",degree_subject:"Law, Finance, or relevant",degree_cost:27000,entry_no_degree:45,payback_years:4,roi_score:66,ai_notes:"Regulatory monitoring will see AI tools grow. Human judgment on edge cases and firm culture remains vital.",entry_notes:"Many compliance roles accessible without degrees via relevant experience and qualifications.",career_notes:"Booming sector post-2008. Fintech and crypto compliance especially in demand." },
+
+  // ENGINEERING
+  { rank:16, title:"Civil Engineer",sector:"Engineering",salary_entry:27000,salary_mid:46000,salary_senior:75000,ai_resilience:70,degree_req:"required",degree_subject:"Civil Engineering (BEng/MEng)",degree_cost:36000,entry_no_degree:15,payback_years:4,roi_score:74,ai_notes:"Design work faces some AI pressure but site management, structural judgment and client work remain human.",entry_notes:"MEng increasingly preferred for chartership. Higher apprenticeship route growing.",career_notes:"Infrastructure investment pipeline strong (HS2, roads, housing). Steady long-term demand." },
+  { rank:17, title:"Structural Engineer",sector:"Engineering",salary_entry:27000,salary_mid:48000,salary_senior:80000,ai_resilience:72,degree_req:"required",degree_subject:"Structural/Civil Engineering",degree_cost:36000,entry_no_degree:10,payback_years:4,roi_score:75,ai_notes:"AI enhances modelling but human sign-off, site judgment and safety responsibility remain.",entry_notes:"Degree required for IStructE chartership.",career_notes:"Strong demand tied to construction boom. Chartership significantly boosts earnings." },
+  { rank:18, title:"Mechanical Engineer",sector:"Engineering",salary_entry:26000,salary_mid:45000,salary_senior:72000,ai_resilience:68,degree_req:"required",degree_subject:"Mechanical Engineering (BEng/MEng)",degree_cost:36000,entry_no_degree:20,payback_years:5,roi_score:70,ai_notes:"CAD/simulation increasingly AI-assisted but product development, manufacturing oversight and innovation remain.",entry_notes:"Degree + IMechE chartership standard path. Degree apprenticeships growing.",career_notes:"Broad sector applicability. Defence, aerospace and energy pay premiums." },
+  { rank:19, title:"Electrical Engineer",sector:"Engineering",salary_entry:27000,salary_mid:47000,salary_senior:78000,ai_resilience:72,degree_req:"required",degree_subject:"Electrical/Electronic Engineering",degree_cost:36000,entry_no_degree:20,payback_years:4,roi_score:76,ai_notes:"Power systems, EV infrastructure, and renewables driving strong demand. Physical installation highly resistant to AI.",entry_notes:"Degree + IET membership path. Higher apprenticeships available.",career_notes:"Green energy transition creates enormous long-term demand pipeline." },
+  { rank:20, title:"Chemical Engineer",sector:"Engineering",salary_entry:30000,salary_mid:52000,salary_senior:85000,ai_resilience:70,degree_req:"required",degree_subject:"Chemical Engineering (MEng)",degree_cost:36000,entry_no_degree:8,payback_years:3,roi_score:82,ai_notes:"Process optimisation uses AI but plant safety, regulatory compliance and innovation resist automation.",entry_notes:"MEng typically required. IChemE chartership standard.",career_notes:"Pharma, energy, and materials provide strong demand. High average salaries." },
+  { rank:21, title:"Aerospace Engineer",sector:"Engineering",salary_entry:30000,salary_mid:52000,salary_senior:90000,ai_resilience:74,degree_req:"required",degree_subject:"Aerospace Engineering (MEng)",degree_cost:36000,entry_no_degree:8,payback_years:3,roi_score:81,ai_notes:"Safety-critical design, certification and physical systems management are hard to automate.",entry_notes:"MEng + RAeS pathway standard.",career_notes:"Defence and space sectors especially buoyant. Clearance-required roles command premium." },
+  { rank:22, title:"Nuclear Engineer",sector:"Engineering",salary_entry:32000,salary_mid:58000,salary_senior:95000,ai_resilience:80,degree_req:"required",degree_subject:"Nuclear Engineering/Physics",degree_cost:36000,entry_no_degree:5,payback_years:3,roi_score:85,ai_notes:"Safety-critical decisions, regulatory oversight and specialised knowledge strongly resist AI.",entry_notes:"Highly specialised degree path. Security clearance required.",career_notes:"Massive investment pipeline with Hinkley Point C and new SMR programme." },
+  { rank:23, title:"Quantity Surveyor",sector:"Engineering/Construction",salary_entry:26000,salary_mid:50000,salary_senior:85000,ai_resilience:55,degree_req:"preferred",degree_subject:"Quantity Surveying (BSc)",degree_cost:27000,entry_no_degree:40,payback_years:3,roi_score:72,ai_notes:"Cost estimation and measurement increasingly automated. Client advisory, risk and procurement remain human.",entry_notes:"Degree apprenticeship route well-established. Non-grad path viable with RICS APC.",career_notes:"Strong construction pipeline. Commercial skills command premium in private sector." },
+  { rank:24, title:"Architecture",sector:"Design/Engineering",salary_entry:24000,salary_mid:42000,salary_senior:70000,ai_resilience:60,degree_req:"required",degree_subject:"Architecture (ARB Part 1/2/3)",degree_cost:60000,entry_no_degree:5,payback_years:10,roi_score:42,ai_notes:"Creative design faces generative AI pressure. Client relationships, planning, and site supervision more resilient.",entry_notes:"Long expensive training: 7 years total. ARB mandatory.",career_notes:"Passion-driven career. ROI poor relative to length of training and salary ceiling." },
+  { rank:25, title:"Project Manager (Engineering)",sector:"Engineering",salary_entry:32000,salary_mid:58000,salary_senior:95000,ai_resilience:65,degree_req:"helpful",degree_subject:"Any engineering or business",degree_cost:27000,entry_no_degree:55,payback_years:3,roi_score:74,ai_notes:"AI will take on scheduling/reporting. Human leadership, stakeholder management and risk judgment remain.",entry_notes:"APM/PMP certification often sufficient. Many PMs come from non-grad backgrounds.",career_notes:"Cross-sector demand. Infrastructure PM especially well-paid." },
+
+  // TECHNOLOGY
+  { rank:26, title:"Software Engineer",sector:"Technology",salary_entry:35000,salary_mid:65000,salary_senior:120000,ai_resilience:55,degree_req:"helpful",degree_subject:"Computer Science or STEM",degree_cost:27000,entry_no_degree:65,payback_years:2,roi_score:68,ai_notes:"Coding increasingly AI-assisted. But architecture, system design, and complex problem solving remain human-critical.",entry_notes:"Bootcamps and self-study viable. CS degree speeds progression and opens doors at elite firms.",career_notes:"Paradox: AI both threatens and is the reason for growing demand. Adapt = survive." },
+  { rank:27, title:"Cybersecurity Analyst",sector:"Technology",salary_entry:30000,salary_mid:58000,salary_senior:100000,ai_resilience:72,degree_req:"helpful",degree_subject:"Cybersecurity, CS, or related",degree_cost:27000,entry_no_degree:60,payback_years:2,roi_score:76,ai_notes:"Threat landscape accelerates; human judgment, adversarial thinking and incident response remain critical.",entry_notes:"Many practitioners self-taught + certified (CISSP, CEH). Degree not required.",career_notes:"Fastest growing tech discipline. Demand structurally exceeds supply." },
+  { rank:28, title:"Data Engineer",sector:"Technology",salary_entry:38000,salary_mid:68000,salary_senior:110000,ai_resilience:58,degree_req:"helpful",degree_subject:"CS, Maths, or Data Science",degree_cost:27000,entry_no_degree:55,payback_years:2,roi_score:72,ai_notes:"Pipeline building and infra face AI tools pressure. Data architecture and governance remain human-led.",entry_notes:"Bootcamps + cloud certs viable. Strong comp-sci grounding helps at senior level.",career_notes:"Booming demand in every sector. Strong salaries, flexible working." },
+  { rank:29, title:"Machine Learning Engineer",sector:"Technology",salary_entry:45000,salary_mid:80000,salary_senior:150000,ai_resilience:60,degree_req:"preferred",degree_subject:"CS, Maths, Statistics",degree_cost:27000,entry_no_degree:35,payback_years:2,roi_score:80,ai_notes:"Building the tools that are the AI risk to others. Own role requires very deep mathematical understanding.",entry_notes:"MSc increasingly standard. Strong maths background essential. Bootcamp path harder at this level.",career_notes:"Highest paid tech discipline. UK market slightly behind US but gap closing." },
+  { rank:30, title:"DevOps/Cloud Engineer",sector:"Technology",salary_entry:35000,salary_mid:65000,salary_senior:105000,ai_resilience:60,degree_req:"helpful",degree_subject:"CS or Engineering",degree_cost:27000,entry_no_degree:68,payback_years:2,roi_score:74,ai_notes:"Infrastructure automation is the job. AI accelerates it but systems thinking and reliability judgment remain human.",entry_notes:"Strong cert-based path (AWS, GCP, Azure). Degree not required.",career_notes:"Every company needs this capability. Remote-friendly, strong market." },
+  { rank:31, title:"Product Manager (Tech)",sector:"Technology",salary_entry:40000,salary_mid:75000,salary_senior:140000,ai_resilience:62,degree_req:"helpful",degree_subject:"Any, CS or Business useful",degree_cost:27000,entry_no_degree:50,payback_years:2,roi_score:76,ai_notes:"Strategy, customer empathy and cross-functional leadership remain human. Reporting and spec writing face AI assistance.",entry_notes:"No required degree. Many PMs from diverse backgrounds. Strong portfolio matters.",career_notes:"Highly competitive role at big tech. Strong at scale-ups. Your background, Paul." },
+  { rank:32, title:"UX Designer",sector:"Technology/Design",salary_entry:28000,salary_mid:50000,salary_senior:85000,ai_resilience:58,degree_req:"helpful",degree_subject:"Design, Psychology, or HCI",degree_cost:27000,entry_no_degree:62,payback_years:3,roi_score:65,ai_notes:"Prototyping tools increasingly AI-assisted. Empathy research, systems thinking and design judgment resist.",entry_notes:"Portfolio-driven field. Bootcamps viable. Degree increasingly less important than evidence of skill.",career_notes:"Growing demand. UX without AI literacy risks obsolescence." },
+  { rank:33, title:"IT Systems Administrator",sector:"Technology",salary_entry:24000,salary_mid:40000,salary_senior:62000,ai_resilience:45,degree_req:"helpful",degree_subject:"IT or CS",degree_cost:27000,entry_no_degree:75,payback_years:4,roi_score:52,ai_notes:"Routine admin tasks being automated. Strategic IT management and complex problem-solving more durable.",entry_notes:"CompTIA, Microsoft certs + experience common. Degree not required.",career_notes:"Commoditised end of market under pressure. Move toward DevOps or security to future-proof." },
+  { rank:34, title:"Network Engineer",sector:"Technology",salary_entry:28000,salary_mid:50000,salary_senior:80000,ai_resilience:55,degree_req:"helpful",degree_subject:"Networking or CS",degree_cost:27000,entry_no_degree:70,payback_years:3,roi_score:62,ai_notes:"SD-WAN and AI network tools growing. Deep infrastructure expertise remains valuable.",entry_notes:"Cisco/CCIE cert path. Degree not required.",career_notes:"Increasingly merged with cloud roles. Specialism in security networking pays well." },
+  { rank:35, title:"Blockchain Developer",sector:"Technology",salary_entry:40000,salary_mid:72000,salary_senior:120000,ai_resilience:65,degree_req:"helpful",degree_subject:"CS or Maths",degree_cost:27000,entry_no_degree:62,payback_years:2,roi_score:75,ai_notes:"Niche technical expertise with limited AI replication currently. Smart contract auditing especially in demand.",entry_notes:"Self-taught viable. Strong open-source portfolio key. Degree helpful but not required.",career_notes:"Volatile sector but persistent demand. Web3 skills premium in London/remote market." },
+
+  // FINANCE
+  { rank:36, title:"Investment Banker",sector:"Finance",salary_entry:55000,salary_mid:120000,salary_senior:400000,ai_resilience:55,degree_req:"required",degree_subject:"Finance, Economics, Maths",degree_cost:40000,entry_no_degree:5,payback_years:2,roi_score:86,ai_notes:"Modelling and analysis faces AI pressure. Deal origination, relationship banking and complex negotiation remain human.",entry_notes:"Target university degree (Oxbridge/LSE/Warwick strongly preferred). Highly competitive.",career_notes:"Extraordinary earnings ceiling. Gruelling hours. AI may hollow out analyst/associate ranks." },
+  { rank:37, title:"Actuary",sector:"Finance",salary_entry:35000,salary_mid:70000,salary_senior:130000,ai_resilience:62,degree_req:"preferred",degree_subject:"Maths, Statistics, or Economics",degree_cost:36000,entry_no_degree:20,payback_years:3,roi_score:80,ai_notes:"Modelling increasingly automated but risk judgment, regulatory sign-off and communication remain human.",entry_notes:"IFoA exam route available without a degree. Maths A-level/degree strongly beneficial.",career_notes:"Highly regarded profession. Strong in insurance, pensions, and banking." },
+  { rank:38, title:"Chartered Accountant (ACA)",sector:"Finance",salary_entry:25000,salary_mid:55000,salary_senior:120000,ai_resilience:52,degree_req:"preferred",degree_subject:"Accountancy, Finance, or any",degree_cost:36000,entry_no_degree:45,payback_years:3,roi_score:72,ai_notes:"Core bookkeeping and compliance heavily automated. Advisory, tax planning and CFO roles more resilient.",entry_notes:"School leaver ACA route (BIG 4 training contracts) means no degree required.",career_notes:"Routes to FD/CFO roles. Highly portable qualification. Volume accounting roles under AI pressure." },
+  { rank:39, title:"Financial Advisor (IFA)",sector:"Finance",salary_entry:28000,salary_mid:60000,salary_senior:150000,ai_resilience:65,degree_req:"none",degree_subject:"None – FCA qualifications",degree_cost:5000,entry_no_degree:82,payback_years:1,roi_score:90,ai_notes:"Human trust, complex life planning, and behavioural finance coaching resist automation.",entry_notes:"CII/CFP qualifications required. No degree needed. Strong no-degree ROI.",career_notes:"Outstanding no-degree ROI. Earnings highly linked to AUM built. Entrepreneurial path." },
+  { rank:40, title:"Mortgage Broker",sector:"Finance",salary_entry:25000,salary_mid:55000,salary_senior:100000,ai_resilience:55,degree_req:"none",degree_subject:"None – CeMAP required",degree_cost:1500,entry_no_degree:88,payback_years:0,roi_score:92,ai_notes:"Comparison and eligibility checking will be automated. Client trust, complex cases, and human reassurance persist.",entry_notes:"CeMAP qualification (£1,500 approx). No degree needed at all.",career_notes:"Exceptional ROI for zero degree cost. Self-employed ceiling is high with client base." },
+  { rank:41, title:"Hedge Fund Analyst",sector:"Finance",salary_entry:55000,salary_mid:110000,salary_senior:500000,ai_resilience:48,degree_req:"required",degree_subject:"Maths, Physics, CS (quantitative)",degree_cost:40000,entry_no_degree:5,payback_years:2,roi_score:82,ai_notes:"Quantitative strategies increasingly algorithmic. Fundamental analysts and portfolio managers still human-led.",entry_notes:"Elite university degree + CFA. Entry exceptionally competitive.",career_notes:"Very high AI displacement risk at junior quant level. Senior judgment harder to replicate." },
+  { rank:42, title:"Insurance Underwriter",sector:"Finance",salary_entry:28000,salary_mid:52000,salary_senior:90000,ai_resilience:50,degree_req:"preferred",degree_subject:"Any degree or CII qualifications",degree_cost:27000,entry_no_degree:55,payback_years:4,roi_score:60,ai_notes:"Pricing models increasingly automated. Complex/specialty risks (Lloyd's market) more human-dependent.",entry_notes:"CII qualifications valued. School-leaver entry at Lloyd's market possible.",career_notes:"Lloyd's of London niche pays premium. Specialty lines more resilient than personal lines." },
+  { rank:43, title:"Tax Consultant",sector:"Finance",salary_entry:28000,salary_mid:58000,salary_senior:120000,ai_resilience:58,degree_req:"preferred",degree_subject:"Accountancy, Law or Finance",degree_cost:36000,entry_no_degree:40,payback_years:3,roi_score:72,ai_notes:"Compliance tax under AI pressure. Complex advisory, international tax, and transactions more resilient.",entry_notes:"ATT/CTA route viable without a degree.",career_notes:"International tax especially well-paid. Big 4 vs boutique advisory trade-offs." },
+  { rank:44, title:"Private Equity Associate",sector:"Finance",salary_entry:60000,salary_mid:130000,salary_senior:400000,ai_resilience:55,degree_req:"required",degree_subject:"Finance, Maths, Economics",degree_cost:40000,entry_no_degree:3,payback_years:2,roi_score:85,ai_notes:"Deal analysis sees AI tools pressure. Origination, portfolio management, and LP relations remain human.",entry_notes:"Usually requires IB analyst experience first. Elite university almost mandatory.",career_notes:"Exceptional earnings potential. Long hours, intense culture. Two-and-out or lifetime career." },
+  { rank:45, title:"Credit Analyst",sector:"Finance",salary_entry:28000,salary_mid:50000,salary_senior:85000,ai_resilience:45,degree_req:"preferred",degree_subject:"Finance, Economics, or Maths",degree_cost:36000,entry_no_degree:40,payback_years:4,roi_score:60,ai_notes:"Credit scoring increasingly automated. Complex/leveraged credit still requires human judgment.",entry_notes:"CFA level helpful. Some school-leaver bank entry routes.",career_notes:"Evolve toward structured finance or credit portfolio management to future-proof." },
+
+  // EDUCATION
+  { rank:46, title:"Secondary School Teacher",sector:"Education",salary_entry:30000,salary_mid:41000,salary_senior:68000,ai_resilience:76,degree_req:"required",degree_subject:"Subject degree + PGCE",degree_cost:36000,entry_no_degree:5,payback_years:5,roi_score:65,ai_notes:"Classroom management, pastoral care, motivation, and adaptive teaching are deeply human.",entry_notes:"Degree + PGCE/QTS required. School Direct routes available.",career_notes:"STEM teachers in high demand and subject premium available. Strong pension." },
+  { rank:47, title:"University Lecturer",sector:"Education",salary_entry:38000,salary_mid:54000,salary_senior:80000,ai_resilience:72,degree_req:"required",degree_subject:"PhD in relevant subject",degree_cost:0,entry_no_degree:2,payback_years:8,roi_score:55,ai_notes:"Research, critical pedagogy, and knowledge generation resist AI. Lecture delivery under pressure.",entry_notes:"PhD typically required. Academic job market highly competitive in most disciplines.",career_notes:"PhD funded in STEM (often). Humanities PhDs face brutal academic job market." },
+  { rank:48, title:"Special Needs Teacher (SENCO)",sector:"Education",salary_entry:30000,salary_mid:44000,salary_senior:70000,ai_resilience:88,degree_req:"required",degree_subject:"Education + SEN specialism",degree_cost:36000,entry_no_degree:5,payback_years:5,roi_score:66,ai_notes:"Highly specialised human relationship work with vulnerable learners. Very high AI resilience.",entry_notes:"QTS + National Award for SEN required for SENCO role.",career_notes:"Under-resourced and in very high demand. Significant emotional labour." },
+  { rank:49, title:"Education Psychologist",sector:"Education",salary_entry:38000,salary_mid:52000,salary_senior:75000,ai_resilience:82,degree_req:"required",degree_subject:"Psychology + EdPsy doctorate",degree_cost:45000,entry_no_degree:2,payback_years:6,roi_score:68,ai_notes:"Child development assessment, formulation and family work are deeply human.",entry_notes:"BPS-accredited doctorate required. Long training path.",career_notes:"High demand in CAMHS and schools. Strong public-sector job security." },
+  { rank:50, title:"Corporate Trainer",sector:"Education",salary_entry:30000,salary_mid:52000,salary_senior:90000,ai_resilience:60,degree_req:"helpful",degree_subject:"Any relevant",degree_cost:27000,entry_no_degree:65,payback_years:3,roi_score:68,ai_notes:"AI replaces some e-learning delivery. Facilitation, leadership coaching, and culture change remain human.",entry_notes:"No specific degree required. CIPD/Chartered status plus track record matters.",career_notes:"Strong in consulting and L&D at major corporates. Entrepreneurial ceiling as independent." },
+
+  // CREATIVE
+  { rank:51, title:"Graphic Designer",sector:"Creative",salary_entry:22000,salary_mid:38000,salary_senior:65000,ai_resilience:38,degree_req:"helpful",degree_subject:"Graphic Design (BA)",degree_cost:27000,entry_no_degree:60,payback_years:8,roi_score:35,ai_notes:"Generative AI is already transforming design production. Brand strategy, art direction and client relationships more resilient.",entry_notes:"Portfolio matters far more than degree. Bootcamp/self-taught viable.",career_notes:"Volume design work severely threatened by AI. Brand strategist evolution essential." },
+  { rank:52, title:"Film Director",sector:"Creative",salary_entry:20000,salary_mid:55000,salary_senior:300000,ai_resilience:68,degree_req:"helpful",degree_subject:"Film, Media, or Creative Arts",degree_cost:27000,entry_no_degree:55,payback_years:12,roi_score:28,ai_notes:"Vision, collaboration, and human narrative judgment are director's unique value.",entry_notes:"Highly skills and portfolio-based. NFTS scholarship route prestigious.",career_notes:"Very few reach high earnings. Precarious. But AI cannot replicate authentic human storytelling." },
+  { rank:53, title:"Copywriter",sector:"Creative",salary_entry:22000,salary_mid:40000,salary_senior:75000,ai_resilience:32,degree_req:"helpful",degree_subject:"English, Journalism, or Marketing",degree_cost:27000,entry_no_degree:70,payback_years:7,roi_score:32,ai_notes:"AI is directly competing with copywriters. Brand voice, strategy, and original ideation more resilient.",entry_notes:"Portfolio-driven. Degree not required but English/humanities helps.",career_notes:"Must evolve to creative strategist. Volume copywriting is being automated." },
+  { rank:54, title:"Architect (Urban Designer)",sector:"Creative/Engineering",salary_entry:26000,salary_mid:48000,salary_senior:85000,ai_resilience:62,degree_req:"required",degree_subject:"Architecture (ARB)",degree_cost:60000,entry_no_degree:3,payback_years:9,roi_score:40,ai_notes:"Urban masterplanning and public sector work more resilient than residential repeat typologies.",entry_notes:"ARB mandatory. Long expensive training.",career_notes:"Public sector planning and masterplanning provides more security than private residential." },
+  { rank:55, title:"Musician/Composer",sector:"Creative",salary_entry:15000,salary_mid:30000,salary_senior:200000,ai_resilience:55,degree_req:"none",degree_subject:"Music or self-taught",degree_cost:27000,entry_no_degree:80,payback_years:20,roi_score:18,ai_notes:"AI music generation is advanced but authentic human performance, collaboration, and artistry persist.",entry_notes:"Conservatoire training helps but self-taught paths common. Very volatile income.",career_notes:"Music licensing and live performance provide AI-resilient income streams. Sync licensing growing." },
+
+  // CONSTRUCTION & TRADES
+  { rank:56, title:"Electrician",sector:"Trades",salary_entry:25000,salary_mid:42000,salary_senior:75000,ai_resilience:88,degree_req:"none",degree_subject:"None – NVQ/Apprenticeship",degree_cost:0,entry_no_degree:95,payback_years:0,roi_score:96,ai_notes:"Physical installation in varied environments is extremely hard to automate. EV revolution creates massive demand uplift.",entry_notes:"JIB apprenticeship is the standard route. No degree. Excellent earning potential as sole trader.",career_notes:"Best no-degree ROI in this dataset. EV charging alone will create demand for decades." },
+  { rank:57, title:"Plumber",sector:"Trades",salary_entry:24000,salary_mid:40000,salary_senior:70000,ai_resilience:90,degree_req:"none",degree_subject:"None – NVQ/Apprenticeship",degree_cost:0,entry_no_degree:95,payback_years:0,roi_score:95,ai_notes:"Physical manual work in varied environments. Heat pump installation drives strong new demand.",entry_notes:"NVQ Level 3 + Gas Safe registration for gas work. No degree.",career_notes:"Heat pump transition means plumbers who upskill will earn premium for 15+ years." },
+  { rank:58, title:"Carpenter/Joiner",sector:"Trades",salary_entry:22000,salary_mid:36000,salary_senior:65000,ai_resilience:85,degree_req:"none",degree_subject:"None – NVQ/Apprenticeship",degree_cost:0,entry_no_degree:95,payback_years:0,roi_score:92,ai_notes:"Skilled physical craftsmanship, adaptation to varied environments and bespoke work strongly resistant.",entry_notes:"City & Guilds + apprenticeship. No degree.",career_notes:"Bespoke furniture and fit-out command significant premium." },
+  { rank:59, title:"HVAC Engineer",sector:"Trades",salary_entry:26000,salary_mid:44000,salary_senior:72000,ai_resilience:85,degree_req:"none",degree_subject:"None – NVQ/Apprenticeship",degree_cost:0,entry_no_degree:93,payback_years:0,roi_score:93,ai_notes:"Net zero retrofit programme and heat pump rollout creates structural decade-long demand.",entry_notes:"NVQ routes. F-Gas and refrigerant qualifications needed for some roles.",career_notes:"One of the most strategically positioned trades for the energy transition." },
+  { rank:60, title:"Bricklayer",sector:"Trades",salary_entry:22000,salary_mid:35000,salary_senior:60000,ai_resilience:86,degree_req:"none",degree_subject:"None – NVQ/Apprenticeship",degree_cost:0,entry_no_degree:95,payback_years:0,roi_score:90,ai_notes:"Robotic bricklaying exists in labs but is nowhere near commercial deployment in varied UK sites.",entry_notes:"NVQ Level 2/3. Apprenticeship routes.",career_notes:"Chronic shortage. Self-employed bricklayers in high-demand areas earn very well." },
+
+  // SCIENCE
+  { rank:61, title:"Biomedical Scientist",sector:"Science",salary_entry:27000,salary_mid:38000,salary_senior:52000,ai_resilience:65,degree_req:"required",degree_subject:"Biomedical Science (BSc)",degree_cost:27000,entry_no_degree:5,payback_years:5,roi_score:62,ai_notes:"Lab automation growing but interpretation, QC oversight, and clinical decision support remain human.",entry_notes:"BSc + HCPC registration required.",career_notes:"NHS pays less than private sector equivalents. Strong job security." },
+  { rank:62, title:"Research Scientist (Pharma)",sector:"Science",salary_entry:30000,salary_mid:52000,salary_senior:90000,ai_resilience:64,degree_req:"required",degree_subject:"Chemistry, Biology, or related (PhD preferred)",degree_cost:0,entry_no_degree:5,payback_years:4,roi_score:72,ai_notes:"AI-driven drug discovery changes the role but creative hypothesis generation and experimental design remain human.",entry_notes:"PhD often funded. Postdoc path for academic science.",career_notes:"AI is transforming drug discovery. Scientists who can work with AI tools thrive." },
+  { rank:63, title:"Environmental Scientist",sector:"Science",salary_entry:24000,salary_mid:38000,salary_senior:60000,ai_resilience:68,degree_req:"required",degree_subject:"Environmental Science, Geography",degree_cost:27000,entry_no_degree:20,payback_years:5,roi_score:60,ai_notes:"Field work, environmental assessment, and regulatory advice strongly resist automation.",entry_notes:"Degree standard. Some apprenticeship routes in Environment Agency.",career_notes:"Net zero and biodiversity net gain legislation creates growing demand pipeline." },
+  { rank:64, title:"Clinical Psychologist",sector:"Science/Healthcare",salary_entry:32000,salary_mid:50000,salary_senior:78000,ai_resilience:82,degree_req:"required",degree_subject:"Psychology + Doctorate (DClinPsy)",degree_cost:0,entry_no_degree:2,payback_years:6,roi_score:70,ai_notes:"Therapeutic alliance, complex formulation, and trauma-informed care are deeply human.",entry_notes:"Doctorate is NHS-funded but extremely competitive. Long training path.",career_notes:"Exceptional job security. Growing demand for mental health services." },
+  { rank:65, title:"Data Scientist",sector:"Science/Tech",salary_entry:38000,salary_mid:65000,salary_senior:110000,ai_resilience:55,degree_req:"preferred",degree_subject:"Statistics, Maths, CS",degree_cost:36000,entry_no_degree:38,payback_years:2,roi_score:76,ai_notes:"AutoML threatens junior roles. Deep statistical expertise, domain knowledge, and communication more resilient.",entry_notes:"MSc increasingly common. Strong bootcamp-to-job pipeline exists.",career_notes:"Must differentiate beyond Python scripts. Domain + communication skills are the moat." },
+
+  // PUBLIC SECTOR
+  { rank:66, title:"Police Officer",sector:"Public Sector",salary_entry:28000,salary_mid:40000,salary_senior:58000,ai_resilience:78,degree_req:"none",degree_subject:"None – Police Now or direct entry",degree_cost:0,entry_no_degree:88,payback_years:0,roi_score:85,ai_notes:"Policing requires human judgment, community trust, and physical presence. AI assists but cannot replace.",entry_notes:"No degree required. Degree Holder Entry Programme also available.",career_notes:"Strong pension and job security. Degree entry scheme accelerates promotion." },
+  { rank:67, title:"Fire Fighter",sector:"Public Sector",salary_entry:24000,salary_mid:36000,salary_senior:45000,ai_resilience:92,degree_req:"none",degree_subject:"None",degree_cost:0,entry_no_degree:95,payback_years:0,roi_score:92,ai_notes:"Physical emergency response in dangerous environments is essentially impossible to automate.",entry_notes:"Competitive selection process. No degree needed. Excellent pension.",career_notes:"Highly resilient career. Firefighters increasingly respond to climate-related incidents too." },
+  { rank:68, title:"Social Worker",sector:"Public Sector",salary_entry:28000,salary_mid:38000,salary_senior:52000,ai_resilience:85,degree_req:"required",degree_subject:"Social Work (BA/MA)",degree_cost:27000,entry_no_degree:5,payback_years:5,roi_score:64,ai_notes:"Safeguarding decisions, family assessment, and trauma-informed practice are deeply human.",entry_notes:"BA Social Work or MA for graduates. No non-graduate route.",career_notes:"Extremely important work. Chronic workforce crisis. Bursary partially available." },
+  { rank:69, title:"Urban Planner",sector:"Public Sector",salary_entry:28000,salary_mid:45000,salary_senior:72000,ai_resilience:65,degree_req:"required",degree_subject:"Town Planning (RTPI accredited)",degree_cost:27000,entry_no_degree:10,payback_years:4,roi_score:68,ai_notes:"Policy interpretation, community engagement, and complex planning judgments resist AI.",entry_notes:"RTPI-accredited degree required for chartership.",career_notes:"Growing demand from housebuilding crisis. Private sector pays significantly more than councils." },
+  { rank:70, title:"Armed Forces Officer",sector:"Public Sector",salary_entry:28000,salary_mid:50000,salary_senior:90000,ai_resilience:80,degree_req:"preferred",degree_subject:"Any (STEM useful)",degree_cost:27000,entry_no_degree:40,payback_years:3,roi_score:72,ai_notes:"Leadership under pressure, complex operations, and moral decision-making remain human.",entry_notes:"UCAS, Sandhurst/BRNC/RAFC. Non-grad Other Ranks route also available.",career_notes:"Non-financial benefits (pension, housing, community) significant. Specialist roles pay well." },
+
+  // PROPERTY & REAL ESTATE
+  { rank:71, title:"Estate Agent",sector:"Property",salary_entry:18000,salary_mid:40000,salary_senior:120000,ai_resilience:55,degree_req:"none",degree_subject:"None – NAEA membership",degree_cost:1000,entry_no_degree:92,payback_years:0,roi_score:88,ai_notes:"Property search automated. But negotiation, client trust, and local knowledge persist.",entry_notes:"No degree required. NAEA/Propertymark qualifications standard.",career_notes:"Commission structure means earnings highly variable. Top earners in prime London market exceptional." },
+  { rank:72, title:"Chartered Surveyor (RICS)",sector:"Property",salary_entry:28000,salary_mid:55000,salary_senior:100000,ai_resilience:66,degree_req:"preferred",degree_subject:"Surveying (RICS-accredited)",degree_cost:27000,entry_no_degree:35,payback_years:3,roi_score:76,ai_notes:"Valuation models increasingly automated but physical inspection, regulatory sign-off and advisory remain.",entry_notes:"APC route without degree available (via RICS Assessment). Apprenticeship degrees growing.",career_notes:"RICS chartership highly portable. Commercial property pays more than residential." },
+  { rank:73, title:"Property Developer",sector:"Property",salary_entry:30000,salary_mid:80000,salary_senior:500000,ai_resilience:70,degree_req:"none",degree_subject:"Finance, Engineering, or self-made",degree_cost:0,entry_no_degree:75,payback_years:0,roi_score:82,ai_notes:"Entrepreneurial judgment, risk assessment, and relationship management strongly human.",entry_notes:"No formal degree route. Often finance + construction experience path.",career_notes:"Very high upside with experience. Capital-intensive but exceptional ceiling." },
+  { rank:74, title:"Facilities Manager",sector:"Property",salary_entry:28000,salary_mid:48000,salary_senior:80000,ai_resilience:60,degree_req:"helpful",degree_subject:"Facilities Management or Engineering",degree_cost:27000,entry_no_degree:65,payback_years:4,roi_score:62,ai_notes:"Building automation grows. Complex multi-site management, vendor relations, and safety compliance remain human.",entry_notes:"IWFM qualification route viable without degree.",career_notes:"Huge scope variation. Net zero retrofit driving up strategic value of FM roles." },
+
+  // MEDIA & COMMUNICATIONS
+  { rank:75, title:"Journalist",sector:"Media",salary_entry:20000,salary_mid:38000,salary_senior:75000,ai_resilience:45,degree_req:"helpful",degree_subject:"Journalism, English, or any",degree_cost:27000,entry_no_degree:58,payback_years:7,roi_score:35,ai_notes:"AI writes news summaries and reports. Investigative journalism, original sourcing, and analysis more resilient.",entry_notes:"NCTJ qualification valued. Degree not essential; portfolio and bylines matter most.",career_notes:"Investigative, specialist, and niche journalism viable. General reporting increasingly under pressure." },
+  { rank:76, title:"PR/Communications Manager",sector:"Media",salary_entry:25000,salary_mid:50000,salary_senior:90000,ai_resilience:56,degree_req:"helpful",degree_subject:"PR, Journalism, Marketing or any",degree_cost:27000,entry_no_degree:60,payback_years:4,roi_score:62,ai_notes:"AI assists content production. Relationship management, crisis comms, and strategic counsel remain human.",entry_notes:"CIPR qualification valued. Degree not strictly required.",career_notes:"In-house vs agency path very different in culture and progression." },
+  { rank:77, title:"Marketing Manager",sector:"Media",salary_entry:28000,salary_mid:52000,salary_senior:90000,ai_resilience:54,degree_req:"helpful",degree_subject:"Marketing, Business, or any",degree_cost:27000,entry_no_degree:62,payback_years:4,roi_score:64,ai_notes:"Content creation, targeting and analytics increasingly AI-assisted. Brand strategy and creativity more resilient.",entry_notes:"CIM qualification valuable. Degree not required.",career_notes:"Data-driven marketing skills + AI literacy is the strongest career combination here." },
+  { rank:78, title:"SEO Specialist",sector:"Media/Technology",salary_entry:22000,salary_mid:40000,salary_senior:72000,ai_resilience:40,degree_req:"none",degree_subject:"None",degree_cost:0,entry_no_degree:88,payback_years:0,roi_score:76,ai_notes:"AI is directly changing how search works. Technical SEO and strategic content more resilient than volume writing.",entry_notes:"No qualifications required. Portfolio and results are everything.",career_notes:"Must evolve to AI search optimisation/GEO (Generative Engine Optimisation). Adapt or perish." },
+
+  // HOSPITALITY & SERVICES
+  { rank:79, title:"Chef (Head Chef)",sector:"Hospitality",salary_entry:20000,salary_mid:40000,salary_senior:85000,ai_resilience:78,degree_req:"none",degree_subject:"None – culinary apprenticeship",degree_cost:0,entry_no_degree:90,payback_years:0,roi_score:80,ai_notes:"Physical creativity, taste, and artisanal craft are deeply resistant to automation.",entry_notes:"Culinary apprenticeship or catering college. No degree. Strong portfolio career.",career_notes:"Michelin-starred chefs command exceptional fees as personal brand. Restaurant ownership viable." },
+  { rank:80, title:"Personal Trainer",sector:"Fitness",salary_entry:18000,salary_mid:40000,salary_senior:120000,ai_resilience:72,degree_req:"none",degree_subject:"None – Level 3 PT qualification",degree_cost:2000,entry_no_degree:95,payback_years:0,roi_score:90,ai_notes:"Human motivation, accountability, and physical coaching strongly resist automation. App competition is real though.",entry_notes:"Level 3 Personal Trainer qualification (approx £2k). No degree needed.",career_notes:"Self-employment model means very high ceiling. Online coaching massively expands addressable market." },
+  { rank:81, title:"Barristers Clerk",sector:"Legal/Services",salary_entry:20000,salary_mid:50000,salary_senior:120000,ai_resilience:62,degree_req:"none",degree_subject:"None",degree_cost:0,entry_no_degree:90,payback_years:0,roi_score:94,ai_notes:"Relationship management within chambers strongly human. Some scheduling automation possible.",entry_notes:"No degree required. One of the best non-graduate earnings trajectories in legal sector.",career_notes:"Often overlooked. Senior clerks at top chambers earn more than many partners." },
+  { rank:82, title:"Driving Instructor",sector:"Services",salary_entry:20000,salary_mid:38000,salary_senior:60000,ai_resilience:50,degree_req:"none",degree_subject:"None – DVSA ADI qualification",degree_cost:2000,entry_no_degree:98,payback_years:0,roi_score:85,ai_notes:"Autonomous vehicles represent long-term existential risk. Human instructor demand should persist for 10–15 years.",entry_notes:"DVSA ADI Part 1/2/3 qualification. Self-employed model.",career_notes:"Limited ceiling. Watch AV timelines closely. Short-to-medium term secure." },
+
+  // MANAGEMENT & STRATEGY
+  { rank:83, title:"Management Consultant",sector:"Business",salary_entry:40000,salary_mid:85000,salary_senior:250000,ai_resilience:58,degree_req:"required",degree_subject:"Any (target university)",degree_cost:40000,entry_no_degree:10,payback_years:2,roi_score:80,ai_notes:"Analysis and benchmarking face AI pressure. Client relationships, change management, and influence remain human.",entry_notes:"Target universities strongly preferred by MBB firms. MBA common for senior moves.",career_notes:"MBB vs boutique very different cultures. Strong earnings but brutal hours at MBB." },
+  { rank:84, title:"Operations Manager",sector:"Business",salary_entry:30000,salary_mid:55000,salary_senior:90000,ai_resilience:60,degree_req:"helpful",degree_subject:"Business, Engineering, or any",degree_cost:27000,entry_no_degree:65,payback_years:3,roi_score:68,ai_notes:"Process optimisation increasingly AI-assisted. People leadership and supplier relationships more durable.",entry_notes:"No specific degree required. CIPS/CMI qualifications helpful.",career_notes:"Broad sector applicability. Supply chain and logistics pay premium post-COVID." },
+  { rank:85, title:"HR Manager",sector:"Business",salary_entry:28000,salary_mid:50000,salary_senior:85000,ai_resilience:58,degree_req:"helpful",degree_subject:"HR, Psychology, or Business",degree_cost:27000,entry_no_degree:58,payback_years:4,roi_score:62,ai_notes:"Transactional HR heavily automated. Employee relations, culture, and strategic partnering more resilient.",entry_notes:"CIPD qualification valued. Degree not mandatory.",career_notes:"CIPD Level 5/7 without degree is viable and well-regarded in profession." },
+
+  // TRANSPORT & LOGISTICS
+  { rank:86, title:"Pilot (Commercial)",sector:"Transport",salary_entry:35000,salary_mid:90000,salary_senior:175000,ai_resilience:72,degree_req:"none",degree_subject:"None – ATPL required",degree_cost:100000,entry_no_degree:75,payback_years:7,roi_score:62,ai_notes:"Automation and potential future autonomy exists but regulatory, liability, and public trust barriers are very high.",entry_notes:"ATPL licence (approx £80–120k, often self-funded). No degree needed but high upfront cost.",career_notes:"Training cost vs earnings is poor ROI early career. Senior/long-haul very well compensated." },
+  { rank:87, title:"Logistics Manager",sector:"Transport",salary_entry:28000,salary_mid:50000,salary_senior:85000,ai_resilience:55,degree_req:"helpful",degree_subject:"Supply Chain, Business, or Logistics",degree_cost:27000,entry_no_degree:65,payback_years:4,roi_score:62,ai_notes:"Routing and warehouse optimisation increasingly AI-driven. Supplier relationships and crisis management more resilient.",entry_notes:"CILT qualification pathway. Degree helpful but not required.",career_notes:"E-commerce growth creates persistent demand. CILT membership accelerates progression." },
+  { rank:88, title:"Train Driver",sector:"Transport",salary_entry:28000,salary_mid:55000,salary_senior:65000,ai_resilience:45,degree_req:"none",degree_subject:"None",degree_cost:0,entry_no_degree:98,payback_years:0,roi_score:88,ai_notes:"HS2 and future rail is increasingly automated. Medium-term AI risk on mainline; shorter-term on metro.",entry_notes:"No degree required. Employer-funded training. Highly competitive for places.",career_notes:"Exceptional no-degree earnings for 10–20 years. Long-term automation risk to monitor." },
+  { rank:89, title:"Air Traffic Controller",sector:"Transport",salary_entry:30000,salary_mid:90000,salary_senior:130000,ai_resilience:65,degree_req:"none",degree_subject:"None – NATS training",degree_cost:0,entry_no_degree:88,payback_years:0,roi_score:95,ai_notes:"Safety-critical real-time decisions with lives at stake. AI assists but full autonomy is very long timeline.",entry_notes:"Highly selective NATS training scheme. No degree needed. Exceptional no-degree ROI.",career_notes:"Outstanding salary relative to no-degree cost. Very competitive to get into." },
+
+  // AGRICULTURE & ENVIRONMENT
+  { rank:90, title:"Agronomist",sector:"Agriculture",salary_entry:25000,salary_mid:42000,salary_senior:68000,ai_resilience:65,degree_req:"required",degree_subject:"Agriculture, Agronomy, or Biology",degree_cost:27000,entry_no_degree:20,payback_years:5,roi_score:60,ai_notes:"Precision agriculture and AI-driven soil analysis is advancing but field expertise and farm advisory remain human.",entry_notes:"BASIS + agronomist qualification route. Degree helpful.",career_notes:"Sustainable agriculture and food security credentials growing in importance." },
+  { rank:91, title:"Renewable Energy Technician",sector:"Energy",salary_entry:24000,salary_mid:40000,salary_senior:62000,ai_resilience:80,degree_req:"none",degree_subject:"None – NVQ/City & Guilds",degree_cost:3000,entry_no_degree:88,payback_years:0,roi_score:88,ai_notes:"Physical installation and maintenance of solar, wind, and battery systems. Essential for net zero.",entry_notes:"MCS accreditation. Electrical qualification often base. No degree needed.",career_notes:"Structural long-term demand from energy transition. Government backed demand pipeline." },
+
+  // WELLBEING
+  { rank:92, title:"Counsellor/Psychotherapist",sector:"Wellbeing",salary_entry:22000,salary_mid:38000,salary_senior:65000,ai_resilience:80,degree_req:"none",degree_subject:"BACP/UKCP accredited diploma",degree_cost:10000,entry_no_degree:75,payback_years:2,roi_score:74,ai_notes:"Therapeutic alliance, safety, and human connection are core to counselling. AI tools assist but cannot substitute.",entry_notes:"BACP-accredited diploma/degree route. Degree not mandatory.",career_notes:"Private practice has strong ceiling. IAPT/NHS pays less but provides structure." },
+  { rank:93, title:"Osteopath / Chiropractor",sector:"Wellbeing",salary_entry:25000,salary_mid:50000,salary_senior:90000,ai_resilience:84,degree_req:"required",degree_subject:"Osteopathy/Chiropractic (4–5yr degree)",degree_cost:50000,entry_no_degree:5,payback_years:5,roi_score:70,ai_notes:"Hands-on manual therapy and holistic patient assessment are very difficult to automate.",entry_notes:"GOsC/GCC registration mandatory.",career_notes:"Private practice model with strong earnings ceiling. NHS integration growing slowly." },
+  { rank:94, title:"Life Coach",sector:"Wellbeing",salary_entry:15000,salary_mid:45000,salary_senior:200000,ai_resilience:58,degree_req:"none",degree_subject:"None – ICF accreditation optional",degree_cost:3000,entry_no_degree:95,payback_years:0,roi_score:72,ai_notes:"Executive coaching and behaviour change are more resilient than generic coaching. AI chatbots threaten commodity end.",entry_notes:"ICF certification helps credibility. No regulated entry requirement.",career_notes:"Very wide earnings range. Executive coaching at C-suite level is premium market." },
+
+  // SPECIALIST NICHE
+  { rank:95, title:"Pilot (Military → Commercial)",sector:"Aviation",salary_entry:30000,salary_mid:85000,salary_senior:160000,ai_resilience:72,degree_req:"none",degree_subject:"None",degree_cost:0,entry_no_degree:80,payback_years:0,roi_score:90,ai_notes:"Same as commercial pilot. Military path has government-funded training: superb ROI.",entry_notes:"RAF/Navy/Army fast jet or helicopter path. Degree not required.",career_notes:"Outstanding ROI given government-funded training. 12-year return-of-service then lucrative civilian path." },
+  { rank:96, title:"Forensic Scientist",sector:"Science",salary_entry:24000,salary_mid:38000,salary_senior:58000,ai_resilience:62,degree_req:"required",degree_subject:"Forensic Science, Chemistry or Biology",degree_cost:27000,entry_no_degree:5,payback_years:6,roi_score:58,ai_notes:"AI assists DNA analysis and evidence matching but court testimony, chain of custody, and expert judgment remain human.",entry_notes:"Degree required. Forensics degree often preferred.",career_notes:"Smaller job market than TV suggests. Private labs and police science service are main employers." },
+  { rank:97, title:"Speech & Language Therapist",sector:"Healthcare",salary_entry:26000,salary_mid:36000,salary_senior:50000,ai_resilience:78,degree_req:"required",degree_subject:"Speech & Language Therapy (BSc/MSc)",degree_cost:27000,entry_no_degree:5,payback_years:5,roi_score:65,ai_notes:"Human communication therapy with children and adults strongly resists AI. Relationship is the therapy.",entry_notes:"HCPC registration mandatory.",career_notes:"Chronic shortage in NHS. Private practice can significantly boost income." },
+  { rank:98, title:"Statistician",sector:"Science/Finance",salary_entry:30000,salary_mid:55000,salary_senior:95000,ai_resilience:60,degree_req:"required",degree_subject:"Statistics or Maths",degree_cost:36000,entry_no_degree:10,payback_years:3,roi_score:76,ai_notes:"Statistical methodology, research design, and interpretation require human expertise AI cannot fully replicate.",entry_notes:"RSS graduate diploma path available. Strong maths background essential.",career_notes:"Government, academia, pharma, and finance all strong demand. ONS + NHS major employers." },
+  { rank:99, title:"Vet",sector:"Animal Health",salary_entry:30000,salary_mid:50000,salary_senior:80000,ai_resilience:82,degree_req:"required",degree_subject:"Veterinary Medicine (BVetMed)",degree_cost:72000,entry_no_degree:2,payback_years:8,roi_score:66,ai_notes:"Physical examination, surgery, and animal-owner communication are highly human. AI aids diagnostics.",entry_notes:"5-year veterinary degree + RCVS registration.",career_notes:"Strong demand exceeds supply. Pet insurance growth boosting private practice revenues." },
+  { rank:100, title:"Waste Water Engineer",sector:"Engineering/Utilities",salary_entry:26000,salary_mid:44000,salary_senior:72000,ai_resilience:74,degree_req:"required",degree_subject:"Environmental or Civil Engineering",degree_cost:36000,entry_no_degree:15,payback_years:4,roi_score:72,ai_notes:"Water infrastructure is physical, safety-critical, and geographically distributed. Very hard to automate.",entry_notes:"BEng + CIWEM membership route. Apprenticeship routes through water companies.",career_notes:"Water companies investing heavily. Infrastructure replacement programme for decades." },
+];
+
+// ============================================================
+// ROI ENGINE  (Gemini formula)
+// ============================================================
+// Assumptions baked in per career:
+//   degree_cost  = tuition fees only (from data)
+//   study_years  = derived from degree_cost / 9250 (rounded)
+//   opportunity_cost = study_years × £22,000 (avg non-grad salary during study)
+//   no_deg_salary = salary_entry × 0.78  (non-grad earns ~78% of grad entry)
+//   salary_premium = salary_mid − no_deg_salary
+//   total_investment = degree_cost + opportunity_cost
+//   ROI % over 10yr = (premium×10 − total_investment) / total_investment × 100
+//   payback_years = total_investment / salary_premium  (years to break even)
+//
+// If a custom personal_debt is set (user input), it replaces total_investment
+// for payback and ROI % — but opportunity cost is still shown for reference.
+
+const NON_GRAD_STUDY_WAGE = 22000; // avg wage if working instead of studying
+const CAREER_HORIZON = 10;         // years used for ROI % calculation
+
+function computeROI(c, personalDebt = null) {
+  if (c.degree_req === 'none' || c.degree_cost === 0) {
+    return { payback: 0, roiPct: null, totalInvestment: c.degree_cost,
+             tuition: c.degree_cost, opCost: 0, premium: c.salary_mid, studyYears: 0 };
+  }
+  const studyYears = Math.max(1, Math.round(c.degree_cost / 9250));
+  const opCost = studyYears * NON_GRAD_STUDY_WAGE;
+  const tuition = c.degree_cost;
+  const defaultInvestment = tuition + opCost;
+  const investment = personalDebt !== null ? personalDebt : defaultInvestment;
+  const noDegSalary = Math.round(c.salary_entry * 0.78);
+  const premium = Math.max(1, c.salary_mid - noDegSalary);
+  const payback = Math.round(investment / premium * 10) / 10;
+  const totalExtra = premium * CAREER_HORIZON;
+  const roiPct = Math.round((totalExtra - investment) / investment * 100);
+  return { payback, roiPct, totalInvestment: investment, tuition, opCost,
+           premium, noDegSalary, studyYears, defaultInvestment };
+}
+
+// payback tiers → colour + label
+function paybackClass(yrs) {
+  if (yrs === 0) return 'roi-positive';
+  if (yrs <= 4)  return 'roi-positive';
+  if (yrs <= 9)  return 'roi-marginal';
+  return 'roi-negative';
+}
+function paybackLabel(yrs) {
+  if (yrs === 0) return { label: 'No cost', cls: 'roi-positive' };
+  if (yrs <= 4)  return { label: `${yrs}yr payback`, cls: 'roi-positive' };
+  if (yrs <= 9)  return { label: `${yrs}yr payback`, cls: 'roi-marginal' };
+  return { label: `${yrs}yr payback`, cls: 'roi-negative' };
+}
+
+// legacy helper kept for table column
+function roiClass(score) {
+  if (score >= 75) return 'roi-positive';
+  if (score >= 50) return 'roi-marginal';
+  return 'roi-negative';
+}
+
+function aiClass(score) {
+  if (score >= 70) return 'c-high';
+  if (score >= 40) return 'c-mid';
+  return 'c-low';
+}
+function aiLabel(score) {
+  if (score >= 70) return 'High';
+  if (score >= 40) return 'Medium';
+  return 'Low';
+}
+function aiBg(score) {
+  if (score >= 70) return 'bg-high';
+  if (score >= 40) return 'bg-mid';
+  return 'bg-low';
+}
+function entryClass(score) {
+  if (score >= 60) return 'c-high';
+  if (score >= 30) return 'c-mid';
+  return 'c-low';
+}
+function degreeLabel(req) {
+  const map = {
+    required: ['Degree Required', 'deg-required'],
+    preferred: ['Degree Preferred', 'deg-preferred'],
+    helpful:   ['Degree Helpful',   'deg-helpful'],
+    none:      ['No Degree',        'deg-none'],
+  };
+  return map[req] || ['—', ''];
+}
+function fmtSalary(n) { return '£' + (n/1000).toFixed(0) + 'k'; }
+function fmtNum(n)    { return '£' + Math.round(n).toLocaleString(); }
+
+function entryDots(score) {
+  const filled = Math.round(score / 20);
+  let html = '<div class="entry-dots">';
+  for (let i = 1; i <= 5; i++) {
+    const cls = i <= filled ? (score >= 60 ? 'dot-filled' : score >= 30 ? 'dot-mid' : 'dot-low') : 'dot-empty';
+    html += `<div class="dot ${cls}"></div>`;
+  }
+  return html + '</div>';
+}
+
+function roiLabel(c) {
+  const r = computeROI(c, personalDebt);
+  const { label, cls } = paybackLabel(r.payback);
+  return `<div class="roi-cell ${cls}">${label}</div>`;
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let currentData = [...CAREERS];
+let sortCol = 'rank';
+let sortDir = 1;
+let currentView = 'cards';
+let activeFilters = new Set();
+let personalDebt = null; // null = use formula defaults
+
+// Sort direction defaults: high-to-low for these cols
+const HIGH_TO_LOW_COLS = new Set(['ai_resilience','salary_mid','entry_no_degree','roi']);
+
+// ============================================================
+// RENDER TABLE
+// ============================================================
+function renderTable(data) {
+  const tbody = document.getElementById('table-body');
+  if (data.length === 0) {
+    tbody.innerHTML = '';
+    document.getElementById('empty-state').classList.remove('hidden');
+    document.getElementById('table-view').classList.add('hidden');
+    document.getElementById('card-view').classList.add('hidden');
+    return;
+  }
+  document.getElementById('empty-state').classList.add('hidden');
+  if (currentView === 'table') document.getElementById('table-view').classList.remove('hidden');
+
+  const [dlabel, dclass] = ['',''];
+  tbody.innerHTML = data.map(c => {
+    const [dl, dc] = degreeLabel(c.degree_req);
+    return `<tr onclick="openModal(${c.rank-1})">
+      <td><span class="rank-num">${c.rank}</span></td>
+      <td>
+        <div class="job-name">${c.title}</div>
+        <div class="job-sector">${c.sector}</div>
+      </td>
+      <td>
+        <div class="score-cell">
+          <div class="score-bar-wrap">
+            <div class="score-bar-fill ${aiBg(c.ai_resilience)}" style="width:${c.ai_resilience}%"></div>
+          </div>
+          <span class="score-num ${aiClass(c.ai_resilience)}">${c.ai_resilience}</span>
+        </div>
+      </td>
+      <td class="hide-mobile">
+        <div class="salary">${fmtSalary(c.salary_mid)}</div>
+        <div class="salary-range">${fmtSalary(c.salary_entry)}–${fmtSalary(c.salary_senior)}</div>
+      </td>
+      <td class="hide-mobile"><span class="degree-badge ${dc}">${dl}</span></td>
+      <td>${roiLabel(c)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          ${entryDots(c.entry_no_degree)}
+          <span class="score-num ${entryClass(c.entry_no_degree)}">${c.entry_no_degree}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER CARDS
+// ============================================================
+function renderCards(data) {
+  const container = document.getElementById('cards-body');
+  if (data.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+  container.innerHTML = data.map(c => {
+    const [dl, dc] = degreeLabel(c.degree_req);
+    const roi = computeROI(c, personalDebt);
+    const { label: roiLbl, cls: roiCls } = paybackLabel(roi.payback);
+    return `<div class="card" onclick="openModal(${c.rank-1})">
+      <div class="card-header">
+        <span class="card-rank">#${c.rank}</span>
+        <span class="degree-badge ${dc}">${dl}</span>
+      </div>
+      <div class="card-title">${c.title}</div>
+      <div class="card-sector">${c.sector}</div>
+      <div class="card-metrics">
+        <div class="card-metric">
+          <div class="metric-label">AI Resilience</div>
+          <div class="metric-value ${aiClass(c.ai_resilience)}">${aiLabel(c.ai_resilience)}</div>
+        </div>
+        <div class="card-metric">
+          <div class="metric-label">Median Salary</div>
+          <div class="metric-value">${fmtSalary(c.salary_mid)}</div>
+        </div>
+        <div class="card-metric">
+          <div class="metric-label">Degree ROI</div>
+          <div class="metric-value ${roiCls}">${roiLbl}</div>
+        </div>
+        <div class="card-metric">
+          <div class="metric-label">No-Degree Entry</div>
+          <div class="metric-value ${entryClass(c.entry_no_degree)}">${c.entry_no_degree >= 60 ? 'High' : c.entry_no_degree >= 30 ? 'Medium' : 'Low'}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER (dispatch)
+// ============================================================
+function render(data) {
+  currentData = data;
+  document.getElementById('results-count').textContent = `${data.length} career${data.length===1?'':'s'}`;
+  if (currentView === 'table') {
+    document.getElementById('table-view').classList.remove('hidden');
+    document.getElementById('card-view').classList.add('hidden');
+    renderTable(data);
+  } else {
+    document.getElementById('card-view').classList.remove('hidden');
+    document.getElementById('table-view').classList.add('hidden');
+    renderCards(data);
+  }
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(idx) {
+  const c = CAREERS[idx];
+  const [dl, dc] = degreeLabel(c.degree_req);
+  document.getElementById('m-title').textContent = c.title;
+  document.getElementById('m-sector').textContent = c.sector;
+
+  function buildModalBody() {
+    const roi = computeROI(c, personalDebt);
+    const { label: roiLbl, cls: roiCls } = paybackLabel(roi.payback);
+    const aiLbl = aiLabel(c.ai_resilience);
+
+    const roiSection = c.degree_req === 'none' || c.degree_cost === 0 ? `
+      <div class="modal-section">
+        <div class="modal-section-title">Degree ROI</div>
+        <p>No degree required — all earnings are unencumbered by study debt or opportunity cost. Estimated upskilling cost: <strong>${fmtNum(c.degree_cost)}</strong>.</p>
+      </div>` : `
+      <div class="modal-section">
+        <div class="modal-section-title">Degree ROI — Gemini Formula</div>
+        <p style="margin-bottom:0.8rem;font-size:0.8rem;color:var(--text-muted)">
+          <strong>Total investment</strong> = tuition fees + opportunity cost (wages lost while studying).<br>
+          <strong>Salary premium</strong> = median salary − estimated non-graduate salary in this field.<br>
+          <strong>Payback</strong> = total investment ÷ annual salary premium.<br>
+          <strong>10yr ROI%</strong> = (premium × 10 − investment) ÷ investment × 100.
+        </p>
+        <div class="roi-breakdown">
+          <div class="roi-row">
+            <span class="roi-label">Tuition fees (est.)</span>
+            <span class="roi-val">${fmtNum(roi.tuition)}</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Opportunity cost (${roi.studyYears}yr × £22k lost wages)</span>
+            <span class="roi-val">${fmtNum(roi.opCost)}</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Default total investment</span>
+            <span class="roi-val">${fmtNum(roi.defaultInvestment)}</span>
+          </div>
+          ${personalDebt !== null ? `
+          <div class="roi-row" style="background:rgba(232,200,74,0.05);border-radius:4px;padding:0.4rem;">
+            <span class="roi-label" style="color:var(--accent)">Your personal debt (overriding)</span>
+            <span class="roi-val" style="color:var(--accent)">${fmtNum(personalDebt)}</span>
+          </div>` : ''}
+          <div class="roi-row">
+            <span class="roi-label">Est. non-grad salary in this field</span>
+            <span class="roi-val">${fmtNum(roi.noDegSalary)}</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Annual salary premium</span>
+            <span class="roi-val">${fmtNum(roi.premium)}/yr</span>
+          </div>
+          <div class="roi-row roi-total">
+            <span class="roi-label">Payback period</span>
+            <span class="roi-val ${roiCls}">${roi.payback === 0 ? 'N/A' : roi.payback + ' years'}</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">10-year ROI %</span>
+            <span class="roi-val ${roiCls}">${roi.roiPct !== null ? roi.roiPct + '%' : 'N/A'}</span>
+          </div>
+        </div>
+        <div style="margin-top:0.8rem;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:0.8rem;">
+          <div style="font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:0.5rem">Payback tiers</div>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--accent2)">🟢 1–4 yrs = Strong ROI</span>
+            <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--accent)">🟡 5–9 yrs = Moderate</span>
+            <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--accent3)">🔴 10+ yrs = Poor ROI</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Personalise with your actual debt</div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.7rem">Add your expected total debt — tuition loan + maintenance loan — and we'll recalculate the payback using your real numbers.</p>
+        <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+          <div style="position:relative;flex:1;min-width:160px;">
+            <span style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--text-muted);font-family:var(--font-mono);font-size:0.85rem">£</span>
+            <input type="number" id="debt-input" placeholder="e.g. 56000"
+              value="${personalDebt !== null ? personalDebt : ''}"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);
+                     padding:0.55rem 0.75rem 0.55rem 1.6rem;border-radius:6px;font-family:var(--font-mono);
+                     font-size:0.85rem;outline:none;">
+          </div>
+          <button onclick="applyPersonalDebt(${idx})"
+            style="background:var(--accent);color:#000;border:none;padding:0.55rem 1rem;border-radius:6px;
+                   font-family:var(--font-mono);font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap;">
+            Recalculate
+          </button>
+          ${personalDebt !== null ? `<button onclick="clearPersonalDebt(${idx})"
+            style="background:transparent;border:1px solid var(--border);color:var(--text-muted);padding:0.55rem 0.8rem;
+                   border-radius:6px;font-family:var(--font-mono);font-size:0.72rem;cursor:pointer;">Clear</button>` : ''}
+        </div>
+        ${personalDebt !== null ? `<p style="font-size:0.72rem;color:var(--accent);margin-top:0.5rem;font-family:var(--font-mono)">
+          ✓ Using your personal debt figure of ${fmtNum(personalDebt)}</p>` : ''}
+      </div>`;
+
+    document.getElementById('modal-body').innerHTML = `
+      <div class="modal-grid">
+        <div class="modal-metric-card">
+          <div class="mmcard-label">AI Resilience</div>
+          <div class="mmcard-value ${aiClass(c.ai_resilience)}">${aiLbl}</div>
+          <div class="mmcard-sub">${c.ai_resilience}/100 · ${c.ai_resilience >= 70 ? 'Strongly resistant' : c.ai_resilience >= 40 ? 'Moderately resilient' : 'Higher risk'}</div>
+        </div>
+        <div class="modal-metric-card">
+          <div class="mmcard-label">Median Salary</div>
+          <div class="mmcard-value">${fmtSalary(c.salary_mid)}</div>
+          <div class="mmcard-sub">${fmtSalary(c.salary_entry)} entry · ${fmtSalary(c.salary_senior)} senior</div>
+        </div>
+        <div class="modal-metric-card">
+          <div class="mmcard-label">Degree ROI</div>
+          <div class="mmcard-value ${roiCls}">${roi.payback === 0 ? 'No cost' : roi.payback + ' yrs'}</div>
+          <div class="mmcard-sub">${roi.roiPct !== null ? roi.roiPct + '% over 10yr' : 'No degree needed'}</div>
+        </div>
+        <div class="modal-metric-card">
+          <div class="mmcard-label">No-Degree Entry</div>
+          <div class="mmcard-value ${entryClass(c.entry_no_degree)}">${c.entry_no_degree}%</div>
+          <div class="mmcard-sub">${c.entry_no_degree >= 70 ? 'Strong alt. paths' : c.entry_no_degree >= 30 ? 'Possible with effort' : 'Degree essential'}</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">AI Displacement Analysis</div>
+        <div class="gauge-row">
+          <div class="gauge-label">AI Resilience</div>
+          <div class="gauge-bar"><div class="gauge-fill ${aiBg(c.ai_resilience)}" style="width:${c.ai_resilience}%"></div></div>
+          <div class="gauge-val ${aiClass(c.ai_resilience)}">${c.ai_resilience}</div>
+        </div>
+        <p style="margin-top:0.6rem">${c.ai_notes}</p>
+      </div>
+
+      ${roiSection}
+
+      <div class="modal-section">
+        <div class="modal-section-title">Entry Pathways</div>
+        <div class="path-grid">
+          <div class="path-card">
+            <div class="path-card-title">With Degree</div>
+            <div class="path-card-content"><span class="degree-badge ${dc}">${dl}</span><br><br>${c.entry_notes}</div>
+          </div>
+          <div class="path-card">
+            <div class="path-card-title">Without Degree</div>
+            <div class="path-card-content">
+              <div style="font-family:var(--font-mono);font-size:1.1rem;font-weight:600;margin-bottom:0.4rem" class="${entryClass(c.entry_no_degree)}">${c.entry_no_degree}% chance</div>
+              ${c.entry_notes}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Career Intelligence</div>
+        <p>${c.career_notes}</p>
+      </div>
+    `;
+  }
+
+  buildModalBody();
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function applyPersonalDebt(idx) {
+  const val = parseFloat(document.getElementById('debt-input').value);
+  if (!isNaN(val) && val > 0) {
+    personalDebt = val;
+    openModal(idx);
+    applyFilters(); // refresh cards/table too
+  }
+}
+
+function clearPersonalDebt(idx) {
+  personalDebt = null;
+  openModal(idx);
+  applyFilters();
+}
+
+document.getElementById('modal-close').onclick = closeModal;
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ============================================================
+// FILTERING & SORTING
+// ============================================================
+function updateFilterBadge() {
+  const sector = document.getElementById('sector-filter').value;
+  const degree = document.getElementById('degree-filter').value;
+  const total = activeFilters.size + (sector ? 1 : 0) + (degree ? 1 : 0);
+  const badge = document.getElementById('filter-badge');
+  const btn = document.getElementById('filter-toggle-btn');
+  badge.textContent = total;
+  badge.classList.toggle('show', total > 0);
+  btn.classList.toggle('has-active', total > 0);
+}
+
+function applyFilters() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const sector = document.getElementById('sector-filter').value;
+  const degree = document.getElementById('degree-filter').value;
+
+  let data = CAREERS.filter(c => {
+    if (search && !c.title.toLowerCase().includes(search) && !c.sector.toLowerCase().includes(search)) return false;
+    if (sector && c.sector !== sector) return false;
+    if (degree && c.degree_req !== degree) return false;
+    if (activeFilters.has('high-ai') && c.ai_resilience < 70) return false;
+    if (activeFilters.has('no-degree') && c.entry_no_degree < 60) return false;
+    if (activeFilters.has('good-roi') && c.roi_score < 75) return false;
+    return true;
+  });
+
+  data = data.sort((a, b) => {
+    let va, vb;
+    if (sortCol === 'roi') {
+      // sort by payback years ascending = best ROI first; invert with sortDir
+      va = computeROI(a, personalDebt).payback;
+      vb = computeROI(b, personalDebt).payback;
+      // 0 = no cost = best, sort those first regardless
+      if (va === 0 && vb !== 0) return -1 * sortDir;
+      if (vb === 0 && va !== 0) return 1 * sortDir;
+    } else {
+      va = a[sortCol]; vb = b[sortCol];
+    }
+    return (va < vb ? -1 : va > vb ? 1 : 0) * sortDir;
+  });
+
+  updateFilterBadge();
+  render(data);
+}
+
+// Drawer toggle
+document.getElementById('filter-toggle-btn').addEventListener('click', function() {
+  const drawer = document.getElementById('filter-drawer');
+  const chevron = document.getElementById('filter-chevron');
+  const open = drawer.classList.toggle('open');
+  chevron.textContent = open ? '▴' : '▾';
+});
+
+// Search + selects
+document.getElementById('search').addEventListener('input', applyFilters);
+document.getElementById('sector-filter').addEventListener('change', applyFilters);
+document.getElementById('degree-filter').addEventListener('change', applyFilters);
+document.getElementById('sort-by').addEventListener('change', e => {
+  sortCol = e.target.value;
+  sortDir = HIGH_TO_LOW_COLS.has(sortCol) ? -1 : 1;
+  applyFilters();
+});
+
+// Filter chips
+document.getElementById('btn-high-ai').addEventListener('click', function() {
+  this.classList.toggle('active');
+  activeFilters.has('high-ai') ? activeFilters.delete('high-ai') : activeFilters.add('high-ai');
+  applyFilters();
+});
+
+document.getElementById('btn-no-degree').addEventListener('click', function() {
+  this.classList.toggle('active');
+  activeFilters.has('no-degree') ? activeFilters.delete('no-degree') : activeFilters.add('no-degree');
+  applyFilters();
+});
+
+document.getElementById('btn-good-roi').addEventListener('click', function() {
+  this.classList.toggle('active');
+  activeFilters.has('good-roi') ? activeFilters.delete('good-roi') : activeFilters.add('good-roi');
+  applyFilters();
+});
+
+// View toggle
+document.getElementById('btn-table').addEventListener('click', function() {
+  currentView = 'table';
+  this.classList.add('active');
+  document.getElementById('btn-cards').classList.remove('active');
+  applyFilters();
+});
+
+document.getElementById('btn-cards').addEventListener('click', function() {
+  currentView = 'cards';
+  this.classList.add('active');
+  document.getElementById('btn-table').classList.remove('active');
+  applyFilters();
+});
+
+// Column sort
+document.querySelectorAll('th[data-col]').forEach(th => {
+  th.addEventListener('click', function() {
+    const col = this.dataset.col;
+    if (sortCol === col) { sortDir *= -1; }
+    else {
+      sortCol = col;
+      sortDir = HIGH_TO_LOW_COLS.has(col) ? -1 : 1;
+    }
+    document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+    this.classList.add('sorted');
+    this.querySelector('.sort-arrow').textContent = sortDir === 1 ? '↑' : '↓';
+    applyFilters();
+  });
+});
+
+// ============================================================
+// INIT
+// ============================================================
+// Populate sector filter
+const sectors = [...new Set(CAREERS.map(c => c.sector))].sort();
+const sel = document.getElementById('sector-filter');
+sectors.forEach(s => {
+  const o = document.createElement('option');
+  o.value = s; o.textContent = s;
+  sel.appendChild(o);
+});
+
+// Header stats
+const avgAI = Math.round(CAREERS.reduce((a,c) => a+c.ai_resilience,0)/CAREERS.length);
+const avgPayback = (CAREERS.filter(c => c.degree_cost > 0)
+  .reduce((a,c) => a + computeROI(c,null).payback, 0) /
+  CAREERS.filter(c => c.degree_cost > 0).length).toFixed(1);
+document.getElementById('avg-ai').textContent = avgAI + '/100';
+document.getElementById('avg-roi').textContent = avgPayback + ' yrs';
+
+// Initial render
+applyFilters();
+</script>
+</body>
+</html>
